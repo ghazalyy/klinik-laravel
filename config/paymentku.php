@@ -1,8 +1,7 @@
 <?php
 
 return [
-    'api_key'      => env('PAYMENTKU_API_KEY', 'pk_live_51MszD8FUMwD2x0Hl'),
-    'merchant_id'  => env('PAYMENTKU_MERCHANT_ID', 'merchant_orinda'),
-    'sandbox'      => env('PAYMENTKU_SANDBOX', true),
-    'checkout_url' => '/paymentku/pay',
+    'api_key'        => env('PAYMENKU_API_KEY', ''),
+    'webhook_secret' => env('PAYMENKU_WEBHOOK_SECRET', ''),
+    'sandbox'        => env('PAYMENKU_SANDBOX', true),
 ];

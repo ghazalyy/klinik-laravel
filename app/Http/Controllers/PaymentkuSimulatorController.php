@@ -46,7 +46,7 @@ class PaymentkuSimulatorController extends Controller
             $status  = 'success'; // Menyimulasikan transaksi berhasil
 
             // Generate signature menggunakan API key simulator
-            $signature = $this->paymentku->generateSignature($orderId, $status, $amount);
+            $signature = $this->paymentku->generateWebhookSignature('0', $orderId . '.' . $status . '.' . $amount);
 
             // Panggil Webhook Controller secara programatik untuk menghindari deadlock single-thread php artisan serve
             $webhookController = app(PaymentkuWebhookController::class);

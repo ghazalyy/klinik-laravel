@@ -18,13 +18,31 @@ class PaymentkuWebhookController extends Controller
 
     public function handle(Request $request)
     {
-        $orderId   = $request->input('order_id');
-        $status    = $request->input('status');
-        $amount    = $request->input('amount');
-        $signature = $request->input('signature');
+        $timestamp = $request->header('X-PaymenKu-Timestamp');
+        $signature = $request->header('X-PaymenKu-Signature');
+        $rawBody   = $request->getContent();
 
-        if (!$this->paymentku->verifySignature($orderId, $status, $amount, $signature)) {
-            return response()->json(['message' => 'Signature key tidak valid'], 403);
+        // Cek jika request dari simulator lokal (menggunakan query parameter/POST data biasa)
+        if (!$signature && $request->has('signature')) {
+            $orderId   = $request->input('order_id');
+            $status    = $request->input('status');
+            $amount    = $request->input('amount');
+            $signature = $request->input('signature');
+            
+            // Verifikasi menggunakan data simulator
+            $simulationBody = $orderId . '.' . $status . '.' . $amount;
+            if (!$this->paymentku->verifyWebhookSignature('0', $simulationBody, $signature)) {
+                return response()->json(['message' => 'Signature key tidak valid (simulator)'], 403);
+            }
+        } else {
+            // Verifikasi request resmi dari API paymenku.com
+            if (empty($timestamp) || empty($signature) || !$this->paymentku->verifyWebhookSignature($timestamp, $rawBody, $signature)) {
+                return response()->json(['message' => 'Signature key tidak valid'], 403);
+            }
+
+            $data = json_decode($rawBody, true);
+            $orderId = $data['reference_id'] ?? '';
+            $status  = $data['status'] ?? '';
         }
 
         // Format order ID: booking-{booking_id}
@@ -35,19 +53,20 @@ class PaymentkuWebhookController extends Controller
             return response()->json(['message' => 'Booking tidak ditemukan'], 404);
         }
 
-        if ($status === 'success') {
+        // Status sukses di Paymenku = 'paid', di simulator = 'success'
+        if ($status === 'paid' || $status === 'success') {
             $booking->update(['status_pembayaran' => 'lunas']);
             if ($booking->pembayaran) {
                 $booking->pembayaran->update([
                     'midtrans_order_id' => $orderId,
-                    'midtrans_status'   => 'success',
-                    'metode_pembayaran' => 'Paymentku',
+                    'midtrans_status'   => $status,
+                    'metode_pembayaran' => 'Paymenku',
                 ]);
             }
-            Log::info("Paymentku: Pembayaran untuk Booking #{$bookingId} berhasil diverifikasi.");
+            Log::info("Paymenku: Pembayaran untuk Booking #{$bookingId} berhasil diverifikasi.");
         } else {
             $booking->update(['status_pembayaran' => 'ditolak']);
-            Log::warning("Paymentku: Pembayaran untuk Booking #{$bookingId} gagal/ditolak.");
+            Log::warning("Paymenku: Pembayaran untuk Booking #{$bookingId} ditolak/gagal.");
         }
 
         return response()->json(['message' => 'OK']);
