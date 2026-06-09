@@ -30,4 +30,9 @@ class AntreanOffline extends Model
     {
         return $this->belongsTo(Dokter::class, 'dokter_id');
     }
+
+    public function rekamMedis()
+    {
+        return $this->hasOne(RekamMedis::class, 'antrean_offline_id');
+    }
 }

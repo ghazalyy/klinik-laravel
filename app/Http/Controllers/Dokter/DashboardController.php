@@ -18,7 +18,7 @@ class DashboardController extends Controller
 
         $bookingsHariIni = Booking::where('dokter_id', $dokter->id)
             ->whereDate('tanggal_booking', today())
-            ->with('pasien')
+            ->with(['pasien', 'rekamMedis'])
             ->orderBy('waktu_mulai_sesi')
             ->get();
 

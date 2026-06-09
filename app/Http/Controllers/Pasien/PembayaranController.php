@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class PembayaranController extends Controller
 {
-    private MidtransService $midtrans;
+    private \App\Services\PaymentkuService $paymentku;
 
-    public function __construct(MidtransService $midtrans)
+    public function __construct(\App\Services\PaymentkuService $paymentku)
     {
-        $this->midtrans = $midtrans;
+        $this->paymentku = $paymentku;
     }
 
     public function show($bookingId)
@@ -25,48 +25,26 @@ class PembayaranController extends Controller
             ->with(['dokter.user', 'pembayaran'])
             ->firstOrFail();
 
-        $clientKey = config('midtrans.client_key');
-        $isProduction = config('midtrans.is_production');
-
-        return view('pasien.pembayaran.show', compact('booking', 'clientKey', 'isProduction'));
+        return view('pasien.pembayaran.show', compact('booking'));
     }
 
-    public function getSnapToken($bookingId)
+    public function checkoutPaymentku($bookingId)
     {
         $booking = Booking::where('id', $bookingId)
             ->where('pasien_id', Auth::id())
-            ->with(['pasien', 'dokter.user', 'pembayaran'])
+            ->with(['pembayaran'])
             ->firstOrFail();
 
         if ($booking->status_pembayaran === 'lunas') {
-            return response()->json(['error' => 'Booking sudah dibayar.'], 400);
+            return redirect()->route('pasien.booking.riwayat')->with('info', 'Booking ini sudah lunas.');
         }
 
-        $payload = [
-            'transaction_details' => [
-                'order_id'    => 'booking-' . $booking->id,
-                'gross_amount' => (int) $booking->pembayaran->jumlah_bayar,
-            ],
-            'customer_details' => [
-                'first_name' => $booking->pasien->nama_lengkap,
-                'phone'      => $booking->pasien->no_telepon ?? '-',
-            ],
-            'item_details' => [
-                [
-                    'id'       => 'konsultasi-' . $booking->dokter->id,
-                    'price'    => (int) $booking->pembayaran->jumlah_bayar,
-                    'quantity' => 1,
-                    'name'     => 'Konsultasi dengan ' . $booking->dokter->user->nama_lengkap,
-                ]
-            ],
-        ];
+        // Generate URL checkout Paymentku
+        $checkoutUrl = $this->paymentku->createTransaction(
+            'booking-' . $booking->id,
+            (float) $booking->pembayaran->jumlah_bayar
+        );
 
-        $token = $this->midtrans->getSnapToken($payload);
-
-        if (!$token) {
-            return response()->json(['error' => 'Gagal membuat token Midtrans.'], 500);
-        }
-
-        return response()->json(['token' => $token]);
+        return redirect($checkoutUrl);
     }
 }

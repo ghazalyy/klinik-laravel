@@ -37,6 +37,11 @@ class Dokter extends Model
         return $this->hasMany(ReviewDokter::class, 'dokter_id');
     }
 
+    public function rekamMedis()
+    {
+        return $this->hasMany(RekamMedis::class, 'dokter_id');
+    }
+
     public function antreanOffline()
     {
         return $this->hasMany(AntreanOffline::class, 'dokter_id');

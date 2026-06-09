@@ -12,12 +12,17 @@
                     {{ $booking->pasien->nama_lengkap }} ↔ Dr. {{ $booking->dokter->user->nama_lengkap }}
                 </p>
             </div>
-            <div class="flex gap-2">
+            <div class="flex gap-2 items-center">
                 <a href="{{ route('chat.download', $booking->id) }}" class="bg-blue-600 px-3 py-1 rounded-lg text-xs hover:bg-blue-500 transition">⬇ Download</a>
                 @if($user->role === 'pasien' && $booking->status_sesi === 'aktif')
                 <form method="POST" action="{{ route('chat.end', $booking->id) }}">@csrf
                     <button type="submit" class="bg-red-500 px-3 py-1 rounded-lg text-xs hover:bg-red-600 transition" onclick="return confirm('Akhiri sesi?')">✖ Akhiri</button>
                 </form>
+                @endif
+                @if($user->role === 'dokter' && $booking->status_sesi === 'aktif')
+                    <a href="{{ route('dokter.rekam-medis.create', ['booking_id' => $booking->id]) }}" class="bg-emerald-600 px-3 py-1 rounded-lg text-xs hover:bg-emerald-500 transition font-bold">
+                        📝 Rekam Medis
+                    </a>
                 @endif
             </div>
         </div>

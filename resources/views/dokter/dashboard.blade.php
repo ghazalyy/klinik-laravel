@@ -71,6 +71,22 @@
                     </div>
                 @endif
 
+                @if($booking->status_sesi === 'aktif')
+                    <a href="{{ route('dokter.rekam-medis.create', ['booking_id' => $booking->id]) }}" class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition shadow-md shadow-emerald-200">
+                        <span>📝</span> Rekam Medis
+                    </a>
+                @elseif($booking->status_sesi === 'selesai')
+                    @if($booking->rekamMedis)
+                        <a href="{{ route('dokter.rekam-medis.show', $booking->rekamMedis->id) }}" class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition">
+                            👁️ Rekam Medis
+                        </a>
+                    @else
+                        <a href="{{ route('dokter.rekam-medis.create', ['booking_id' => $booking->id]) }}" class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition shadow-md shadow-emerald-200">
+                            <span>📝</span> Rekam Medis
+                        </a>
+                    @endif
+                @endif
+
                 <form method="POST" action="{{ route('dokter.update.status', $booking->id) }}" class="flex-1 md:flex-none">
                     @csrf
                     @if($booking->status_sesi === 'menunggu')

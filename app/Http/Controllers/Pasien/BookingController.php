@@ -51,7 +51,7 @@ class BookingController extends Controller
     public function riwayat()
     {
         $bookings = Booking::where('pasien_id', Auth::id())
-            ->with(['dokter.user', 'pembayaran', 'reviewDokter'])
+            ->with(['dokter.user', 'pembayaran', 'reviewDokter', 'rekamMedis'])
             ->orderByDesc('tanggal_booking')
             ->paginate(15);
 

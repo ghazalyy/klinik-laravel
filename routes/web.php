@@ -86,6 +86,9 @@ Route::middleware(['auth', 'nocache', 'role:dokter'])->prefix('dokter')->name('d
     Route::get('/dashboard', [Dokter\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/riwayat', [Dokter\DashboardController::class, 'riwayat'])->name('riwayat');
     Route::post('/update-status/{id}', [Dokter\DashboardController::class, 'updateStatus'])->name('update.status');
+    
+    // Rekam Medis
+    Route::resource('rekam-medis', Dokter\RekamMedisController::class);
 });
 
 // =============================================
@@ -99,9 +102,13 @@ Route::middleware(['auth', 'nocache', 'role:pasien'])->prefix('pasien')->name('p
     Route::post('/booking', [Pasien\BookingController::class, 'store'])->name('booking.store');
     Route::get('/booking/riwayat', [Pasien\BookingController::class, 'riwayat'])->name('booking.riwayat');
 
-    // Pembayaran (Midtrans)
+    // Pembayaran (Paymentku)
     Route::get('/pembayaran/{bookingId}', [Pasien\PembayaranController::class, 'show'])->name('pembayaran.show');
-    Route::post('/pembayaran/{bookingId}/snap-token', [Pasien\PembayaranController::class, 'getSnapToken'])->name('pembayaran.snap');
+    Route::post('/pembayaran/{bookingId}/checkout', [Pasien\PembayaranController::class, 'checkoutPaymentku'])->name('pembayaran.checkout');
+
+    // Rekam Medis Saya
+    Route::get('/rekam-medis', [Pasien\RekamMedisController::class, 'index'])->name('rekam-medis.index');
+    Route::get('/rekam-medis/{id}', [Pasien\RekamMedisController::class, 'show'])->name('rekam-medis.show');
 
     // Antrean Offline
     Route::get('/antrean', [Pasien\AntreanController::class, 'index'])->name('antrean.index');
@@ -130,3 +137,13 @@ Route::middleware(['auth', 'nocache'])->prefix('chat')->name('chat.')->group(fun
 Route::post('/midtrans/webhook', [MidtransWebhookController::class, 'handle'])
     ->name('midtrans.webhook')
     ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+
+// =============================================
+// PAYMENTKU SIMULATOR & WEBHOOK (no CSRF)
+// =============================================
+Route::get('/paymentku/pay/{token}', [App\Http\Controllers\PaymentkuSimulatorController::class, 'checkout'])->name('paymentku.checkout');
+Route::post('/paymentku/pay/{token}', [App\Http\Controllers\PaymentkuSimulatorController::class, 'pay'])->name('paymentku.pay');
+Route::post('/paymentku/webhook', [App\Http\Controllers\PaymentkuWebhookController::class, 'handle'])
+    ->name('paymentku.webhook')
+    ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+

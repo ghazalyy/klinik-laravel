@@ -77,6 +77,11 @@
                     <span class="font-medium text-[13px]">Riwayat Booking</span>
                 </a>
 
+                <a href="{{ route('pasien.rekam-medis.index') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition text-sm text-blue-100 hover:bg-white/5 {{ request()->routeIs('pasien.rekam-medis.*') ? 'nav-active' : '' }}">
+                    <span class="text-lg opacity-70">📁</span>
+                    <span class="font-medium text-[13px]">Rekam Medis Saya</span>
+                </a>
+
                 <p class="text-[10px] text-blue-400 font-bold uppercase px-4 py-3 mt-6 opacity-50 tracking-widest">Layanan Offline</p>
 
                 <a href="{{ route('pasien.antrean.index') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition text-sm text-blue-100 hover:bg-white/5 {{ request()->routeIs('pasien.antrean.index') ? 'nav-active' : '' }}">

@@ -48,18 +48,21 @@
                     <p class="text-xs opacity-80 font-medium">Silakan cek riwayat booking untuk memulai chat.</p>
                 </div>
             @else
-                <button id="pay-button" 
-                    class="w-full py-5 bg-slate-900 hover:bg-black text-white font-black rounded-2xl text-xl shadow-2xl shadow-slate-300 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3">
-                    <span class="text-2xl">💳</span> 
-                    <span>KONFIRMASI & BAYAR</span>
-                </button>
+                <form action="{{ route('pasien.pembayaran.checkout', $booking->id) }}" method="POST">
+                    @csrf
+                    <button type="submit" 
+                        class="w-full py-5 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-2xl text-xl shadow-2xl shadow-blue-200 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3">
+                        <span class="text-2xl">💳</span> 
+                        <span>KONFIRMASI & BAYAR</span>
+                    </button>
+                </form>
                 <div class="mt-6 flex flex-col items-center gap-3">
-                    <div class="flex items-center gap-4 opacity-40 grayscale hover:grayscale-0 transition-all duration-300">
+                    <div class="flex items-center gap-4 opacity-40 transition-all duration-300">
                         <span class="font-bold text-xs uppercase tracking-widest text-slate-400">Powered by</span>
-                        <img src="https://midtrans.com/img/footer/midtrans.png" alt="Midtrans" class="h-4">
+                        <span class="font-bold text-sm text-blue-600 tracking-wider font-mono">PAYMENTKU</span>
                     </div>
                     <p class="text-[10px] text-slate-400 font-medium max-w-xs text-center leading-relaxed">
-                        Klik tombol di atas untuk membuka jendela aman Midtrans. Anda dapat membayar menggunakan E-Wallet, Virtual Account, maupun Kartu Kredit.
+                        Klik tombol di atas untuk membuka jendela aman Paymentku. Anda dapat membayar menggunakan E-Wallet, Virtual Account, maupun QRIS.
                     </p>
                 </div>
             @endif
@@ -67,55 +70,4 @@
     </div>
 </div>
 
-@push('scripts')
-<script src="{{ $isProduction ? 'https://app.midtrans.com/snap/snap.js' : 'https://app.sandbox.midtrans.com/snap/snap.js' }}"
-    data-client-key="{{ $clientKey }}"></script>
-<script>
-document.getElementById('pay-button')?.addEventListener('click', async function() {
-    const btn = this;
-    const originalText = btn.innerHTML;
-    
-    btn.disabled = true;
-    btn.innerHTML = '<span class="animate-spin text-xl">🌀</span> <span>Tunggu Sebentar...</span>';
-
-    try {
-        const res = await fetch('{{ route('pasien.pembayaran.snap', $booking->id) }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content
-            }
-        });
-
-        const data = await res.json();
-        if (data.token) {
-            snap.pay(data.token, {
-                onSuccess: () => {
-                    window.location.href = '{{ route('pasien.booking.riwayat') }}?status=success';
-                },
-                onPending: () => {
-                    window.location.href = '{{ route('pasien.booking.riwayat') }}?status=pending';
-                },
-                onError: () => { 
-                    alert('Terjadi kesalahan pada sistem pembayaran.'); 
-                    window.location.reload(); 
-                },
-                onClose: () => { 
-                    btn.disabled = false; 
-                    btn.innerHTML = originalText; 
-                },
-            });
-        } else {
-            alert(data.error || 'Autentikasi pembayaran gagal dikonfigurasi.');
-            btn.disabled = false;
-            btn.innerHTML = originalText;
-        }
-    } catch (e) {
-        alert('Tidak dapat terhubung ke server pembayaran.');
-        btn.disabled = false;
-        btn.innerHTML = originalText;
-    }
-});
-</script>
-@endpush
 @endsection

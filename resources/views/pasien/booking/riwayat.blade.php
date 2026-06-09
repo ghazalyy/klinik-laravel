@@ -47,6 +47,10 @@
                                 <a href="{{ route('chat.room', $b->id) }}" class="text-xs font-bold text-green-600 hover:underline">Chat</a>
                             @endif
 
+                            @if($b->status_sesi === 'selesai' && $b->rekamMedis)
+                                <a href="{{ route('pasien.rekam-medis.show', $b->rekamMedis->id) }}" class="text-xs font-bold text-blue-600 hover:underline">Rekam Medis</a>
+                            @endif
+
                             @if($b->status_sesi === 'selesai' && !$b->reviewDokter)
                                 <a href="{{ route('pasien.ulasan.show', $b->id) }}" class="text-xs font-bold text-orange-600 hover:underline">Beri Ulasan</a>
                             @endif

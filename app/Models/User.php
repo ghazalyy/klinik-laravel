@@ -32,6 +32,12 @@ class User extends Authenticatable
         return $this->hasOne(Dokter::class, 'user_id');
     }
 
+    // Rekam medis sebagai pasien
+    public function rekamMedis()
+    {
+        return $this->hasMany(RekamMedis::class, 'pasien_id');
+    }
+
     // Booking sebagai pasien
     public function bookings()
     {

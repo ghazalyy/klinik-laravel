@@ -72,6 +72,11 @@
                     <span class="font-medium text-[13px]">Riwayat Pasien</span>
                 </a>
 
+                <a href="{{ route('dokter.rekam-medis.index') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition text-sm text-blue-100 hover:bg-white/5 {{ request()->routeIs('dokter.rekam-medis.*') ? 'nav-active' : '' }}">
+                    <span class="text-lg opacity-70">📁</span>
+                    <span class="font-medium text-[13px]">Rekam Medis</span>
+                </a>
+
                 <p class="text-[10px] text-blue-400 font-bold uppercase px-4 py-3 mt-6 opacity-50 tracking-widest">Konsultasi</p>
                 <div class="px-4 py-2 bg-blue-800/30 rounded-xl border border-blue-500/20">
                     <p class="text-[11px] text-blue-200 leading-relaxed">Konsultasi online aktif akan muncul di dashboard secara otomatis.</p>

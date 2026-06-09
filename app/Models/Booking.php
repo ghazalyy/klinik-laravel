@@ -52,4 +52,9 @@ class Booking extends Model
     {
         return $this->hasOne(ReviewDokter::class, 'booking_id');
     }
+
+    public function rekamMedis()
+    {
+        return $this->hasOne(RekamMedis::class, 'booking_id');
+    }
 }
