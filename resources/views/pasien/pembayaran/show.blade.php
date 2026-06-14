@@ -59,10 +59,10 @@
                 <div class="mt-6 flex flex-col items-center gap-3">
                     <div class="flex items-center gap-4 opacity-40 transition-all duration-300">
                         <span class="font-bold text-xs uppercase tracking-widest text-slate-400">Powered by</span>
-                        <span class="font-bold text-sm text-blue-600 tracking-wider font-mono">PAYMENTKU</span>
+                        <span class="font-bold text-sm text-blue-600 tracking-wider font-mono">PAYMENKU</span>
                     </div>
                     <p class="text-[10px] text-slate-400 font-medium max-w-xs text-center leading-relaxed">
-                        Klik tombol di atas untuk membuka jendela aman Paymentku. Anda dapat membayar menggunakan E-Wallet, Virtual Account, maupun QRIS.
+                        Klik tombol di atas untuk membuka jendela aman Paymenku. Anda dapat membayar menggunakan E-Wallet, Virtual Account, maupun QRIS.
                     </p>
                 </div>
             @endif

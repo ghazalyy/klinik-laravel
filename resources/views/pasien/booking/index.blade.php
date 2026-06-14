@@ -42,7 +42,7 @@
         </div>
 
         <div class="bg-blue-50 rounded-lg p-4 text-sm text-blue-700">
-            ℹ️ Setelah booking, Anda akan diarahkan ke halaman pembayaran via <strong>Midtrans Snap</strong>.
+            ℹ️ Setelah booking, Anda akan diarahkan ke halaman pembayaran via <strong>Paymenku</strong>.
         </div>
 
         <button type="submit"
