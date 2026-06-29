@@ -24,6 +24,10 @@ class PaymentkuWebhookController extends Controller
 
         // Cek jika request dari simulator lokal (menggunakan query parameter/POST data biasa)
         if (!$signature && $request->has('signature')) {
+            if (!$this->paymentku->isSandbox()) {
+                return response()->json(['message' => 'Simulator is disabled in production/live mode.'], 403);
+            }
+
             $orderId   = $request->input('order_id');
             $status    = $request->input('status');
             $amount    = $request->input('amount');

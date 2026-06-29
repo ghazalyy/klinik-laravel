@@ -14,18 +14,35 @@ class PaymentkuService
     {
         $this->apiKey        = config('paymentku.api_key') ?: '';
         $this->webhookSecret = config('paymentku.webhook_secret') ?: '';
-        $this->sandbox       = config('paymentku.sandbox', true);
+        $this->sandbox       = (bool) config('paymentku.sandbox', true);
+    }
+
+    /**
+     * Memeriksa apakah mode sandbox sedang aktif.
+     */
+    public function isSandbox(): bool
+    {
+        return $this->sandbox;
     }
 
     /**
      * Membuat transaksi. Jika API key diatur, ia akan memanggil endpoint asli paymenku.com.
-     * Jika tidak, ia akan fallback ke simulator lokal.
+     * Jika tidak, ia akan fallback ke simulator lokal (hanya jika mode sandbox aktif).
      */
     public function createTransaction(string $orderId, float $amount, array $customer = []): string
     {
-        // Jika tidak ada API key, gunakan simulator lokal
-        if (empty($this->apiKey) || $this->apiKey === 'pk_live_51MszD8FUMwD2x0Hl') {
-            return $this->generateSimulatorUrl($orderId, $amount);
+        if (!$this->sandbox) {
+            if (empty($this->apiKey)) {
+                throw new \Exception("Paymentku API key is not configured for production/live mode.");
+            }
+            if ($this->apiKey === 'pk_live_51MszD8FUMwD2x0Hl' || $this->apiKey === 'sk_test_1A2HTnPqWsaYoPgHLTlJTWjpc201io6N') {
+                throw new \Exception("Invalid live API key configured. Please configure a valid live Paymentku API key.");
+            }
+        } else {
+            // Jika mode sandbox, gunakan simulator jika API key kosong atau dummy
+            if (empty($this->apiKey) || $this->apiKey === 'pk_live_51MszD8FUMwD2x0Hl') {
+                return $this->generateSimulatorUrl($orderId, $amount);
+            }
         }
 
         $url = 'https://paymenku.com/api/v1/transaction/create';
@@ -39,6 +56,8 @@ class PaymentkuService
             'customer_phone' => $customer['phone'] ?? '081234567890',
             'return_url'     => route('pasien.booking.riwayat'),
         ];
+
+        $errorMessage = 'Unknown connection error';
 
         try {
             $ch = curl_init();
@@ -62,15 +81,29 @@ class PaymentkuService
                 if (isset($data['status']) && $data['status'] === 'success' && isset($data['data']['pay_url'])) {
                     return $data['data']['pay_url'];
                 }
+                $errorMessage = $data['message'] ?? 'Unknown error response from Paymenku API.';
+            } else {
+                $errorMessage = "HTTP error code $httpCode received.";
             }
 
             Log::error("Paymenku API Error (Code: $httpCode): " . $response);
+
+            if (!$this->sandbox) {
+                throw new \Exception("Paymenku API transaction creation failed: " . $errorMessage);
+            }
         } catch (\Exception $e) {
             Log::error("Paymenku Connection Error: " . $e->getMessage());
+            if (!$this->sandbox) {
+                throw new \Exception("Paymenku connection failed: " . $e->getMessage(), 0, $e);
+            }
         }
 
-        // Fallback ke simulator jika API gagal terhubung atau error
-        return $this->generateSimulatorUrl($orderId, $amount);
+        // Fallback ke simulator jika API gagal terhubung atau error (hanya jika mode sandbox aktif)
+        if ($this->sandbox) {
+            return $this->generateSimulatorUrl($orderId, $amount);
+        }
+
+        throw new \Exception("Failed to generate payment URL.");
     }
 
     /**

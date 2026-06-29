@@ -13,6 +13,9 @@ class PaymentkuSimulatorController extends Controller
     public function __construct(PaymentkuService $paymentku)
     {
         $this->paymentku = $paymentku;
+        if (!$this->paymentku->isSandbox()) {
+            abort(403, 'Simulator is disabled in production/live mode.');
+        }
     }
 
     public function checkout($token)
