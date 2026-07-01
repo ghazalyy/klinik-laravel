@@ -108,14 +108,12 @@
                     </div>
                 </div>
 
-                <!-- Detail QRIS Simulator -->
+                <!-- Detail QRIS -->
                 <div id="details-qris" class="mt-6 p-6 bg-slate-50 border border-slate-100 rounded-2xl flex flex-col items-center">
                     <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm mb-3">
-                        <!-- Simulated QR Code -->
-                        <div class="w-40 h-40 bg-slate-100 flex flex-col items-center justify-center relative border border-slate-200">
-                            <div class="w-36 h-36 border-4 border-slate-800 flex items-center justify-center bg-white font-mono text-[9px] font-bold text-center leading-tight">
-                                PAYMENTKU<br>QRIS MOCKUP<br>★ ★ ★ ★ ★<br>ORDER #{{ $booking->id }}
-                            </div>
+                        <!-- QR Code -->
+                        <div class="w-40 h-40 bg-white flex items-center justify-center relative border border-slate-200 p-2 rounded-xl">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ urlencode('paymentku:booking-' . $booking->id) }}" alt="QRIS Code" class="w-36 h-36">
                             <!-- Small Center Logo -->
                             <div class="absolute w-8 h-8 bg-blue-600 text-white font-bold rounded-lg flex items-center justify-center text-xs shadow-md border border-white">K</div>
                         </div>
@@ -123,7 +121,7 @@
                     <p class="text-xs text-slate-500 font-semibold">Scan QR code di atas menggunakan aplikasi mobile banking Anda.</p>
                 </div>
 
-                <!-- Detail VA Simulator -->
+                <!-- Detail VA -->
                 <div id="details-va" class="mt-6 p-6 bg-slate-50 border border-slate-100 rounded-2xl hidden">
                     <p class="text-xs text-slate-400 uppercase tracking-wider font-bold mb-2">Nomor Virtual Account</p>
                     <div class="flex items-center justify-between bg-white px-4 py-3 border border-slate-200 rounded-xl">
