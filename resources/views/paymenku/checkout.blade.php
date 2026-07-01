@@ -138,7 +138,7 @@
                 <form method="POST" action="{{ route('paymentku.pay', $token) }}">
                     @csrf
                     <button type="submit" class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-extrabold rounded-2xl text-base shadow-lg shadow-blue-200 transition-all transform hover:-translate-y-0.5 active:scale-95 flex items-center justify-center gap-2">
-                        <span>🚀</span> BAYAR SEKARANG (SIMULATOR)
+                        <span>🚀</span> BAYAR SEKARANG
                     </button>
                 </form>
                 <div class="mt-4 flex justify-between text-[10px] text-slate-400 font-medium">
