@@ -7,9 +7,26 @@
         <h3 class="text-2xl font-bold text-slate-800">Halo, dr. {{ $dokter->user->nama_lengkap }}</h3>
         <p class="text-slate-500 text-sm mt-1">Spesialisasi: <span class="font-semibold text-blue-600">{{ $dokter->spesialisasi }}</span></p>
     </div>
-    <div class="bg-blue-50 px-4 py-2 rounded-xl border border-blue-100 flex items-center gap-3">
-        <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-        <span class="text-xs font-bold text-blue-700 uppercase tracking-wider">Status: Online</span>
+    <div>
+        @if($dokter->status_online === 'Online')
+            <form action="{{ route('dokter.toggle.status') }}" method="POST">
+                @csrf
+                <button type="submit" class="bg-emerald-50 hover:bg-emerald-100 px-4 py-2.5 rounded-xl border border-emerald-200 flex items-center gap-2.5 transition duration-200 group shadow-sm">
+                    <div class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse"></div>
+                    <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider">Status: Online</span>
+                    <span class="text-[10px] text-slate-400 font-normal normal-case">(Klik untuk Offline)</span>
+                </button>
+            </form>
+        @else
+            <form action="{{ route('dokter.toggle.status') }}" method="POST">
+                @csrf
+                <button type="submit" class="bg-rose-50 hover:bg-rose-100 px-4 py-2.5 rounded-xl border border-rose-200 flex items-center gap-2.5 transition duration-200 group shadow-sm">
+                    <div class="w-2.5 h-2.5 bg-rose-400 rounded-full"></div>
+                    <span class="text-xs font-bold text-rose-700 uppercase tracking-wider">Status: Offline</span>
+                    <span class="text-[10px] text-slate-400 font-normal normal-case">(Klik untuk Online)</span>
+                </button>
+            </form>
+        @endif
     </div>
 </div>
 

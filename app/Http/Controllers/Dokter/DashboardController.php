@@ -56,4 +56,17 @@ class DashboardController extends Controller
 
         return redirect()->route('dokter.dashboard')->with('success', 'Status sesi diperbarui.');
     }
+
+    public function toggleStatus(Request $request)
+    {
+        $dokter = Auth::user()->dokter;
+        if (!$dokter) {
+            return redirect()->route('login')->with('error', 'Profil dokter tidak ditemukan.');
+        }
+
+        $newStatus = $dokter->status_online === 'Online' ? 'Offline' : 'Online';
+        $dokter->update(['status_online' => $newStatus]);
+
+        return redirect()->route('dokter.dashboard')->with('success', 'Status online Anda berhasil diperbarui menjadi ' . $newStatus . '.');
+    }
 }

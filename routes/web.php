@@ -86,6 +86,7 @@ Route::middleware(['auth', 'nocache', 'role:dokter'])->prefix('dokter')->name('d
     Route::get('/dashboard', [Dokter\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/riwayat', [Dokter\DashboardController::class, 'riwayat'])->name('riwayat');
     Route::post('/update-status/{id}', [Dokter\DashboardController::class, 'updateStatus'])->name('update.status');
+    Route::post('/toggle-status', [Dokter\DashboardController::class, 'toggleStatus'])->name('toggle.status');
     
     // Rekam Medis
     Route::resource('rekam-medis', Dokter\RekamMedisController::class);
