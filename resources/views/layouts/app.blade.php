@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Klinik Pratama Orinda')</title>
+    <link rel="icon" type="image/jpeg" href="{{ asset('assets/images/logo.jpg') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
@@ -20,8 +21,9 @@
     <nav class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <a href="{{ route('home') }}" class="flex items-center gap-2 font-bold text-xl text-blue-700">
-                    🏥 Klinik Pratama Orinda
+                <a href="{{ route('home') }}" class="flex items-center gap-3 font-bold text-xl text-blue-700">
+                    <img src="{{ asset('assets/images/logo.jpg') }}" alt="Logo Klinik Pratama Orinda" class="h-8 w-8 object-contain rounded-full bg-white border border-gray-200">
+                    <span>Klinik Pratama Orinda</span>
                 </a>
                 <div class="hidden md:flex items-center gap-6 text-sm font-medium">
                     <a href="{{ route('home') }}" class="text-gray-600 hover:text-blue-600 transition">Beranda</a>
@@ -72,7 +74,10 @@
     <!-- Footer -->
     <footer class="bg-gray-800 text-white mt-16 py-10">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-lg font-bold">🏥 Klinik Pratama Orinda</p>
+            <p class="text-lg font-bold flex items-center justify-center gap-2">
+                <img src="{{ asset('assets/images/logo.jpg') }}" alt="Logo Klinik Pratama Orinda" class="h-6 w-6 object-contain rounded-full bg-white">
+                Klinik Pratama Orinda
+            </p>
             <p class="text-gray-400 text-sm mt-2">Kesehatan Anda adalah Prioritas Kami</p>
             <p class="text-gray-500 text-xs mt-4">© {{ date('Y') }} Klinik Pratama Orinda. All rights reserved.</p>
         </div>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Pasien | @yield('title', 'Panel') — Klinik Orinda</title>
+    <link rel="icon" type="image/jpeg" href="{{ asset('assets/images/logo.jpg') }}">
     
     <!-- Fonts: Outfit (Headings) & Inter (Body) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
@@ -53,7 +54,7 @@
         <aside class="w-64 sidebar-glass text-white hidden lg:flex flex-col flex-shrink-0 z-40">
             <div class="p-6 border-b border-white/5">
                 <a href="{{ route('home') }}" class="flex items-center gap-3">
-                    <div class="w-9 h-9 bg-blue-500 rounded-xl flex items-center justify-center font-bold text-lg shadow-lg">K</div>
+                    <img src="{{ asset('assets/images/logo.jpg') }}" alt="Logo" class="w-9 h-9 rounded-xl object-contain bg-white p-0.5">
                     <span class="text-xl font-extrabold tracking-tight text-white uppercase italic">Orinda</span>
                 </a>
                 <p class="text-[10px] uppercase tracking-[0.2em] text-blue-400 mt-2 font-bold opacity-70">Panel Pasien</p>

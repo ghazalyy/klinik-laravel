@@ -22,10 +22,13 @@
     <div class="bg-white rounded-3xl border border-slate-200 shadow-xl shadow-slate-100/50 p-10 relative overflow-hidden" id="printable-area">
         <!-- Logo / Kop Surat -->
         <div class="flex flex-col md:flex-row md:items-center justify-between border-b-2 border-slate-800 pb-6 mb-8 gap-4">
-            <div>
-                <h2 class="text-2xl font-black text-blue-900 tracking-tight uppercase italic">Klinik Pratama Orinda</h2>
-                <p class="text-xs text-slate-400 font-medium mt-1">Jl. Mawar Melati No. 45, Jakarta Selatan</p>
-                <p class="text-[10px] text-slate-400">Telp: (021) 7654321 • Email: info@klinikorinda.com</p>
+            <div class="flex items-center gap-4">
+                <img src="{{ asset('assets/images/logo.jpg') }}" alt="Logo" class="w-16 h-16 rounded-full object-contain bg-white">
+                <div>
+                    <h2 class="text-2xl font-black text-blue-900 tracking-tight uppercase italic">Klinik Pratama Orinda</h2>
+                    <p class="text-xs text-slate-400 font-medium mt-1">Jl. Mawar Melati No. 45, Jakarta Selatan</p>
+                    <p class="text-[10px] text-slate-400">Telp: (021) 7654321 • Email: info@klinikorinda.com</p>
+                </div>
             </div>
             <div class="text-left md:text-right">
                 <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-[10px] font-black uppercase tracking-widest">

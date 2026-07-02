@@ -5,7 +5,8 @@
 <div class="min-h-screen flex items-center justify-center py-12 px-4">
     <div class="max-w-md w-full space-y-8">
         <div class="text-center">
-            <h2 class="text-3xl font-extrabold text-gray-900">🏥 Klinik Pratama Orinda</h2>
+            <img src="{{ asset('assets/images/logo.jpg') }}" alt="Logo Klinik Pratama Orinda" class="mx-auto h-20 w-20 object-contain rounded-full shadow-md mb-4 bg-white p-1">
+            <h2 class="text-3xl font-extrabold text-gray-900">Klinik Pratama Orinda</h2>
             <p class="mt-2 text-sm text-gray-600">Masuk ke akun Anda</p>
         </div>
 
