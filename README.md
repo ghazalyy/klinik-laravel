@@ -39,6 +39,7 @@ Sistem ini mengelola tiga jenis pengguna: **Admin**, **Dokter**, dan **Pasien**,
 | **Kelola Dokter & Jadwal** | Manajemen profil dan waktu praktik dokter secara dinamis |
 
 ### 🧑‍⚕️ Panel Dokter
+- **Fitur Status Kehadiran (Online/Offline)**: Tombol interaktif dinamis dengan indikator warna di beranda untuk mengubah status presensi dokter secara langsung.
 - Dashboard pasien harian dengan kontrol status sesi (aktif/selesai)
 - Riwayat seluruh konsultasi pasien
 - Ruang Chat real-time dengan pasien
@@ -49,6 +50,12 @@ Sistem ini mengelola tiga jenis pengguna: **Admin**, **Dokter**, dan **Pasien**,
 - Antrean Walk-in (Offline) instan
 - Sistem Review & Rating Dokter (mempengaruhi SPK)
 - Chat real-time dan Download riwayat chat (.txt)
+
+---
+
+## 🎨 Pembaruan Desain & Aset Terbaru
+- **Integrasi Logo Resmi**: Penerapan logo resmi **Klinik Pratama Orinda** di navbar halaman utama, dashboard pasien, dokter, admin, halaman auth (login & register), serta format cetak (Kop Surat) Rekam Medis.
+- **Favicon Kustom**: Favicon bermerek yang seragam pada tab browser untuk seluruh halaman aplikasi.
 
 ---
 
