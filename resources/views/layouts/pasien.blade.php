@@ -95,6 +95,13 @@
                     <span class="font-medium text-[13px]">Riwayat Antrean</span>
                 </a>
 
+                <p class="text-[10px] text-blue-400 font-bold uppercase px-4 py-3 mt-6 opacity-50 tracking-widest">Umpan Balik Pasien</p>
+
+                <a href="{{ route('pasien.survei.index') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition text-sm text-blue-100 hover:bg-white/5 {{ request()->routeIs('pasien.survei.*') ? 'nav-active' : '' }}">
+                    <span class="text-lg opacity-70">⭐</span>
+                    <span class="font-medium text-[13px]">Survei Kepuasan</span>
+                </a>
+
                 <p class="text-[10px] text-blue-400 font-bold uppercase px-4 py-3 mt-6 opacity-50 tracking-widest">Akun</p>
 
                 <a href="{{ route('profil') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition text-sm text-blue-100 hover:bg-white/5 {{ request()->routeIs('profil') ? 'nav-active' : '' }}">

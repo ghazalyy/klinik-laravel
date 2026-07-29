@@ -111,6 +111,46 @@
                     </tbody>
                 </table>
             </div>
+        <!-- Survey History -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                <h3 class="font-bold text-gray-800">Riwayat Survei Kepuasan Pasien</h3>
+                <span class="text-xs font-bold bg-indigo-50 text-indigo-600 px-2 py-1 rounded-full">{{ $survei->count() }} Total</span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-50 text-gray-500 uppercase text-xs">
+                        <tr>
+                            <th class="px-6 py-3">Tanggal</th>
+                            <th class="px-6 py-3">Pendaftaran</th>
+                            <th class="px-6 py-3">Fasilitas</th>
+                            <th class="px-6 py-3">Staf</th>
+                            <th class="px-6 py-3">Kebersihan</th>
+                            <th class="px-6 py-3">NPS</th>
+                            <th class="px-6 py-3">Saran / Masukan</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-50">
+                        @foreach($survei as $s)
+                        <tr>
+                            <td class="px-6 py-4 text-gray-600 font-medium">{{ $s->created_at->format('d/m/Y H:i') }}</td>
+                            <td class="px-6 py-4 text-amber-500 font-bold">★ {{ $s->rating_pendaftaran }}</td>
+                            <td class="px-6 py-4 text-amber-500 font-bold">★ {{ $s->rating_fasilitas }}</td>
+                            <td class="px-6 py-4 text-amber-500 font-bold">★ {{ $s->rating_pelayanan_staf }}</td>
+                            <td class="px-6 py-4 text-amber-500 font-bold">★ {{ $s->rating_kebersihan }}</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-indigo-100 text-indigo-700">
+                                    {{ $s->rekomendasi_nps }} / 10
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500 italic max-w-[200px] truncate">
+                                {{ $s->saran_masukan ? '"' . $s->saran_masukan . '"' : '-' }}
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Booking;
 use App\Models\AntreanOffline;
+use App\Models\SurveiKepuasan;
 use Illuminate\Support\Facades\DB;
 
 class CrmController extends Controller
@@ -46,9 +47,24 @@ class CrmController extends Controller
             ->limit(20)
             ->get();
 
+        // Analytics Survei Kepuasan Pasien
+        $totalSurvei        = SurveiKepuasan::count();
+        $avgPendaftaran     = round(SurveiKepuasan::avg('rating_pendaftaran') ?? 0, 2);
+        $avgFasilitas       = round(SurveiKepuasan::avg('rating_fasilitas') ?? 0, 2);
+        $avgPelayananStaf   = round(SurveiKepuasan::avg('rating_pelayanan_staf') ?? 0, 2);
+        $avgKebersihan      = round(SurveiKepuasan::avg('rating_kebersihan') ?? 0, 2);
+        $avgNps             = round(SurveiKepuasan::avg('rekomendasi_nps') ?? 0, 1);
+        
+        $surveiTerbaru = SurveiKepuasan::with('pasien')
+            ->orderByDesc('created_at')
+            ->limit(10)
+            ->get();
+
         return view('admin.crm.dashboard', compact(
             'totalPasien', 'pasienBaru', 'totalBooking', 'bookingBulanIni',
-            'totalAntrean', 'pasienSelesai', 'trendData', 'dokterPopuler', 'pasienTidakAktif'
+            'totalAntrean', 'pasienSelesai', 'trendData', 'dokterPopuler', 'pasienTidakAktif',
+            'totalSurvei', 'avgPendaftaran', 'avgFasilitas', 'avgPelayananStaf',
+            'avgKebersihan', 'avgNps', 'surveiTerbaru'
         ));
     }
 
@@ -57,7 +73,8 @@ class CrmController extends Controller
         $pasien   = User::findOrFail($id);
         $bookings = Booking::where('pasien_id', $id)->with(['dokter.user', 'pembayaran', 'reviewDokter'])->orderByDesc('tanggal_booking')->get();
         $antrean  = AntreanOffline::where('pasien_id', $id)->with('dokter.user')->orderByDesc('tanggal_kunjungan')->get();
+        $survei   = SurveiKepuasan::where('pasien_id', $id)->orderByDesc('created_at')->get();
 
-        return view('admin.crm.pasien', compact('pasien', 'bookings', 'antrean'));
+        return view('admin.crm.pasien', compact('pasien', 'bookings', 'antrean', 'survei'));
     }
 }

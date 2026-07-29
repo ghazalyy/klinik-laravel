@@ -119,6 +119,10 @@ Route::middleware(['auth', 'nocache', 'role:pasien'])->prefix('pasien')->name('p
     // Ulasan
     Route::get('/ulasan/{bookingId}', [Pasien\UlasanController::class, 'show'])->name('ulasan.show');
     Route::post('/ulasan/{bookingId}', [Pasien\UlasanController::class, 'store'])->name('ulasan.store');
+
+    // Survei Kepuasan Pasien
+    Route::get('/survei', [Pasien\SurveiController::class, 'index'])->name('survei.index');
+    Route::post('/survei', [Pasien\SurveiController::class, 'store'])->name('survei.store');
 });
 
 // =============================================

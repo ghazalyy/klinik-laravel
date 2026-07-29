@@ -47,6 +47,89 @@
     </div>
 </div>
 
+<!-- Patient Satisfaction Survey Analytics Section -->
+<div class="mb-8 space-y-6">
+    <div class="flex items-center justify-between">
+        <div>
+            <h3 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                <span>⭐</span> Analitik Kepuasan Pasien (CRM Survey)
+            </h3>
+            <p class="text-xs text-gray-500 mt-1">Umpan balik dan penilaian kualitas layanan fasilitas klinik secara keseluruhan dari pasien.</p>
+        </div>
+        <span class="px-3 py-1.5 bg-indigo-50 text-indigo-700 font-extrabold text-xs rounded-xl border border-indigo-100">
+            Total {{ $totalSurvei }} Tanggapan
+        </span>
+    </div>
+
+    <!-- Survey Score Cards -->
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 text-center">
+            <p class="text-xs text-gray-400 font-semibold uppercase">Pendaftaran</p>
+            <p class="text-2xl font-black text-amber-500 mt-1">★ {{ $avgPendaftaran }} <span class="text-xs font-normal text-gray-400">/ 5</span></p>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 text-center">
+            <p class="text-xs text-gray-400 font-semibold uppercase">Fasilitas</p>
+            <p class="text-2xl font-black text-amber-500 mt-1">★ {{ $avgFasilitas }} <span class="text-xs font-normal text-gray-400">/ 5</span></p>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 text-center">
+            <p class="text-xs text-gray-400 font-semibold uppercase">Pelayanan Staf</p>
+            <p class="text-2xl font-black text-amber-500 mt-1">★ {{ $avgPelayananStaf }} <span class="text-xs font-normal text-gray-400">/ 5</span></p>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 text-center">
+            <p class="text-xs text-gray-400 font-semibold uppercase">Kebersihan</p>
+            <p class="text-2xl font-black text-amber-500 mt-1">★ {{ $avgKebersihan }} <span class="text-xs font-normal text-gray-400">/ 5</span></p>
+        </div>
+        <div class="bg-indigo-600 p-4 rounded-xl shadow-md text-white text-center col-span-2 md:col-span-1">
+            <p class="text-xs text-indigo-200 font-semibold uppercase">NPS Rekomendasi</p>
+            <p class="text-2xl font-black mt-1">{{ $avgNps }} <span class="text-xs font-normal text-indigo-200">/ 10</span></p>
+        </div>
+    </div>
+
+    <!-- Recent Feedback Table -->
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+        <h4 class="text-base font-bold text-gray-800 mb-4">Umpan Balik & Saran Pasien Terbaru</h4>
+        @if($surveiTerbaru->isEmpty())
+        <p class="text-xs text-gray-400 text-center py-4">Belum ada survei kepuasan yang diisi oleh pasien.</p>
+        @else
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left">
+                <thead class="bg-gray-50 text-gray-500 uppercase text-xs">
+                    <tr>
+                        <th class="px-4 py-3">Pasien</th>
+                        <th class="px-4 py-3">Rata-Rata Rating</th>
+                        <th class="px-4 py-3">NPS</th>
+                        <th class="px-4 py-3">Kritik / Saran Masukan</th>
+                        <th class="px-4 py-3">Waktu</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @foreach($surveiTerbaru as $st)
+                    @php
+                        $avg = round(($st->rating_pendaftaran + $st->rating_fasilitas + $st->rating_pelayanan_staf + $st->rating_kebersihan) / 4, 1);
+                    @endphp
+                    <tr>
+                        <td class="px-4 py-3 font-medium text-gray-800">{{ $st->pasien->nama_lengkap }}</td>
+                        <td class="px-4 py-3 text-amber-500 font-bold">★ {{ $avg }} / 5</td>
+                        <td class="px-4 py-3">
+                            <span class="px-2.5 py-1 bg-indigo-50 text-indigo-700 text-xs font-bold rounded-lg">
+                                {{ $st->rekomendasi_nps }} / 10
+                            </span>
+                        </td>
+                        <td class="px-4 py-3 text-gray-600 text-xs italic max-w-sm truncate">
+                            {{ $st->saran_masukan ? '"' . $st->saran_masukan . '"' : '-' }}
+                        </td>
+                        <td class="px-4 py-3 text-gray-400 text-xs whitespace-nowrap">
+                            {{ $st->created_at->diffForHumans() }}
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        @endif
+    </div>
+</div>
+
 <!-- Inactive Patients -->
 <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
     <h3 class="text-lg font-semibold mb-4">Pasien Tidak Aktif (>90 Hari)</h3>

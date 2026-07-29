@@ -50,6 +50,12 @@ class User extends Authenticatable
         return $this->hasMany(AntreanOffline::class, 'pasien_id');
     }
 
+    // Survei kepuasan sebagai pasien
+    public function surveiKepuasan()
+    {
+        return $this->hasMany(SurveiKepuasan::class, 'pasien_id');
+    }
+
     // Helper: apakah user ini adalah dokter
     public function isDokter(): bool
     {
