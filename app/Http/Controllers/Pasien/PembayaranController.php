@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Pasien;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Pembayaran;
-use App\Services\MidtransService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

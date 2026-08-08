@@ -231,7 +231,7 @@ class DatabaseSeeder extends Seeder
             $bookingModels[] = $booking;
 
             // Pembayaran
-            $metodeList = ['Transfer Bank', 'QRIS', 'Midtrans Paymentku Simulator'];
+            $metodeList = ['Transfer Bank', 'QRIS', 'Paymenku'];
             $metode = $metodeList[array_rand($metodeList)];
             
             Pembayaran::create([
@@ -239,8 +239,8 @@ class DatabaseSeeder extends Seeder
                 'jumlah_bayar'             => $dokter->harga_sesi,
                 'metode_pembayaran'        => $metode,
                 'bukti_transfer'           => $b['pay_status'] === 'lunas' ? 'bukti_sample.jpg' : null,
-                'midtrans_order_id'        => 'ORDER-' . strtoupper(substr(md5(rand()), 0, 10)),
-                'midtrans_status'          => $b['pay_status'] === 'lunas' ? 'settlement' : ($b['pay_status'] === 'pending' ? 'pending' : 'deny'),
+                'paymentku_reference'      => 'booking-' . $booking->id,
+                'paymentku_status'         => $b['pay_status'] === 'lunas' ? 'paid' : ($b['pay_status'] === 'pending' ? 'pending' : 'failed'),
                 'verifikasi_oleh_admin_id' => $b['pay_status'] === 'lunas' ? $admin->id : null,
                 'created_at'               => $date,
                 'updated_at'               => $date,

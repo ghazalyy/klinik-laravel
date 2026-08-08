@@ -13,8 +13,8 @@ class Pembayaran extends Model
         'jumlah_bayar',
         'metode_pembayaran',
         'bukti_transfer',
-        'midtrans_order_id',
-        'midtrans_status',
+        'paymentku_reference',
+        'paymentku_status',
         'verifikasi_oleh_admin_id',
     ];
 

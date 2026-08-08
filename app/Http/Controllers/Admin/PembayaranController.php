@@ -15,7 +15,7 @@ class PembayaranController extends Controller
         $pembayarans = Pembayaran::with(['booking.pasien', 'booking.dokter.user'])
             ->whereHas('booking', fn($q) => $q->where('status_pembayaran', 'pending'))
             ->whereNotNull('bukti_transfer')
-            ->whereNull('midtrans_order_id')
+            ->whereNull('paymentku_reference')
             ->orderByDesc('created_at')
             ->get();
 

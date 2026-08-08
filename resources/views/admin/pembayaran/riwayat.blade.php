@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="mb-6">
-    <p class="text-gray-600">Seluruh catatan transaksi pembayaran baik via Midtrans maupun manual.</p>
+    <p class="text-gray-600">Seluruh catatan transaksi pembayaran baik via Paymenku maupun manual.</p>
 </div>
 
 <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">

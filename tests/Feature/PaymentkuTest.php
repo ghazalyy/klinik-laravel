@@ -88,8 +88,8 @@ class PaymentkuTest extends TestCase
         $pembayaran->refresh();
 
         $this->assertEquals('lunas', $booking->status_pembayaran);
-        $this->assertEquals('booking-' . $booking->id, $pembayaran->midtrans_order_id);
-        $this->assertEquals('success', $pembayaran->midtrans_status);
+        $this->assertEquals('booking-' . $booking->id, $pembayaran->paymentku_reference);
+        $this->assertEquals('success', $pembayaran->paymentku_status);
         $this->assertEquals('Paymenku', $pembayaran->metode_pembayaran);
     }
 }

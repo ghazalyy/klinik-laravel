@@ -14,8 +14,8 @@ return new class extends Migration
             $table->decimal('jumlah_bayar', 10, 2);
             $table->string('metode_pembayaran', 50)->default('Transfer Bank');
             $table->string('bukti_transfer', 255)->nullable();
-            $table->string('midtrans_order_id', 100)->nullable();
-            $table->string('midtrans_status', 50)->nullable();
+            $table->string('paymentku_reference', 100)->nullable();
+            $table->string('paymentku_status', 50)->nullable();
             $table->foreignId('verifikasi_oleh_admin_id')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });

@@ -66,8 +66,8 @@ erDiagram
         decimal jumlah_bayar
         string metode_pembayaran
         string bukti_transfer
-        string midtrans_order_id
-        string midtrans_status
+        string paymentku_reference
+        string paymentku_status
         bigint verifikasi_oleh_admin_id FK
         timestamp created_at
         timestamp updated_at
@@ -218,10 +218,10 @@ erDiagram
 | `id` | BIGINT (PK) | Primary Key |
 | `booking_id` | BIGINT (FK) | Relasi ke `booking.id` (Cascade) |
 | `jumlah_bayar` | DECIMAL(10,2) | Nominal yang harus dibayar |
-| `metode_pembayaran`| VARCHAR(50) | Metode bayar (cth: 'Transfer Bank', 'Midtrans') |
+| `metode_pembayaran`| VARCHAR(50) | Metode bayar (cth: 'Transfer Bank', 'Paymenku') |
 | `bukti_transfer` | VARCHAR(255) \| Nullable | Path file bukti transfer manual |
-| `midtrans_order_id`| VARCHAR(100) \| Nullable | ID Transaksi unik Midtrans |
-| `midtrans_status` | VARCHAR(50) \| Nullable | Status pembayaran di Midtrans |
+| `paymentku_reference`| VARCHAR(100) \| Nullable | ID/Referensi Transaksi unik Paymenku |
+| `paymentku_status` | VARCHAR(50) \| Nullable | Status pembayaran di Paymenku |
 | `verifikasi_oleh_admin_id` | BIGINT (FK) \| Nullable | Relasi ke `users.id` (Set Null) |
 | `created_at` | TIMESTAMP | Waktu pembayaran diajukan |
 | `updated_at` | TIMESTAMP | Waktu verifikasi/update status |

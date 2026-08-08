@@ -1,6 +1,6 @@
 # 🏥 Klinik Pratama Orinda — Sistem Manajemen Klinik Laravel 12
 
-> Sistem informasi klinik modern berbasis Laravel 12 dengan fitur booking online, manajemen dokter, payment gateway Midtrans, chat real-time, CRM analitik premium, dan SPK pemeringkatan dokter.
+> Sistem informasi klinik modern berbasis Laravel 12 dengan fitur booking online, manajemen dokter, payment gateway Paymenku, chat real-time, CRM analitik premium, dan SPK pemeringkatan dokter.
 
 ---
 
@@ -10,7 +10,7 @@
 - [Fitur Utama](#-fitur-utama)
 - [Teknologi yang Digunakan](#-teknologi-yang-digunakan)
 - [Panduan Instalasi Lokal](#-panduan-instalasi-lokal)
-- [Konfigurasi Payment Gateway](#-konfigurasi-payment-gateway-midtrans)
+- [Konfigurasi Payment Gateway](#-konfigurasi-payment-gateway-paymenku)
 - [Deploy ke Production](#-deploy-ke-production)
 - [Akun Default](#-akun-default-seeder)
 - [Dokumentasi Sistem](#-dokumentasi-sistem)
@@ -46,7 +46,7 @@ Sistem ini mengelola tiga jenis pengguna: **Admin**, **Dokter**, dan **Pasien**,
 
 ### 🧑‍🤝‍🧑 Panel Pasien
 - Booking online dengan pemilihan jadwal otomatis
-- **Integrasi Midtrans Snap**: Pembayaran otomatis (QRIS, E-Wallet, VA, dll)
+- **Integrasi Paymenku Gateway**: Pembayaran otomatis (QRIS, E-Wallet, VA, dll)
 - Antrean Walk-in (Offline) instan
 - Sistem Review & Rating Dokter (mempengaruhi SPK)
 - Chat real-time dan Download riwayat chat (.txt)
@@ -66,7 +66,7 @@ Sistem ini mengelola tiga jenis pengguna: **Admin**, **Dokter**, dan **Pasien**,
 | **Framework** | Laravel 12 (Stable) |
 | **Database** | MySQL / MariaDB (Eloquent ORM) |
 | **Frontend** | Tailwind CSS (CDN), Alpine.js (opsional), Google Fonts (Inter & Outfit) |
-| **Payment** | Midtrans SNAP API Service |
+| **Payment** | Paymenku Gateway Service |
 | **Keamanan** | Custom Middleware (CheckRole, NoCache), CSRF Protection |
 
 ---
@@ -114,22 +114,18 @@ Akses di: `http://localhost:8000`
 
 ---
 
-## 💳 Konfigurasi Payment Gateway (Midtrans)
+## 💳 Konfigurasi Payment Gateway (Paymenku)
 
-1. Daftar akun di [dashboard.midtrans.com](https://dashboard.midtrans.com)
-2. Pilih mode **Sandbox** untuk pengujian atau **Production** untuk live
-3. Salin **Client Key** dan **Server Key** dari menu *Settings → Access Keys*
+1. Daftar akun di dashboard Paymenku
+2. Pilih mode Sandbox/Live
+3. Salin API Key dan Merchant ID
 4. Tambahkan ke file `.env`:
 
 ```env
-MIDTRANS_SERVER_KEY=SB-Mid-server-xxxxxxxxxxxx
-MIDTRANS_CLIENT_KEY=SB-Mid-client-xxxxxxxxxxxx
-MIDTRANS_IS_PRODUCTION=false
-MIDTRANS_IS_SANITIZED=true
-MIDTRANS_IS_3DS=true
+PAYMENKU_API_KEY=pk_test_xxxxxxxxxxxx
+PAYMENKU_MERCHANT_ID=MID-xxxxxxxxxxxx
+PAYMENKU_IS_SANDBOX=true
 ```
-
-5. Untuk mode Production, ubah `MIDTRANS_IS_PRODUCTION=true` dan gunakan key Production
 
 > ⚠️ **Penting:** Jangan pernah commit file `.env` yang berisi key Production ke repository publik.
 
@@ -159,7 +155,7 @@ sudo git clone https://github.com/username/klinik-laravel.git
 cd klinik-laravel
 sudo composer install --optimize-autoloader --no-dev
 sudo cp .env.example .env
-sudo nano .env   # Isi konfigurasi DB & Midtrans
+sudo nano .env   # Isi konfigurasi DB & Paymenku
 sudo php artisan key:generate
 sudo php artisan migrate --force --seed
 ```
@@ -283,7 +279,7 @@ Pastikan file `.htaccess` di `public_html/` berisi:
 
 - [ ] `APP_DEBUG=false` di `.env` production
 - [ ] `APP_ENV=production` di `.env`
-- [ ] Key Midtrans Production sudah diisi
+- [ ] Key Paymenku Production/Live sudah diisi
 - [ ] Permission `storage/` & `bootstrap/cache/` sudah `755`
 - [ ] SSL/HTTPS sudah aktif
 - [ ] `php artisan config:cache` sudah dijalankan

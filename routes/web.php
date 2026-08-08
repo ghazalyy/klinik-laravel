@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ChatController;
-use App\Http\Controllers\MidtransWebhookController;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Dokter;
 use App\Http\Controllers\Pasien;
@@ -136,12 +135,6 @@ Route::middleware(['auth', 'nocache'])->prefix('chat')->name('chat.')->group(fun
     Route::get('/{bookingId}/download', [ChatController::class, 'downloadChat'])->name('download');
 });
 
-// =============================================
-// MIDTRANS WEBHOOK (no CSRF)
-// =============================================
-Route::post('/midtrans/webhook', [MidtransWebhookController::class, 'handle'])
-    ->name('midtrans.webhook')
-    ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
 
 // =============================================
 // PAYMENTKU SIMULATOR & WEBHOOK (no CSRF)

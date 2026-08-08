@@ -41,7 +41,7 @@ class BookingController extends Controller
         Pembayaran::create([
             'booking_id'        => $booking->id,
             'jumlah_bayar'      => $dokter->harga_sesi,
-            'metode_pembayaran' => 'Midtrans',
+            'metode_pembayaran' => 'Paymenku',
         ]);
 
         return redirect()->route('pasien.pembayaran.show', $booking->id)

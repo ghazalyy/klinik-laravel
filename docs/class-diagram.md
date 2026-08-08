@@ -87,8 +87,8 @@ classDiagram
         +decimal jumlah_bayar
         +string metode_pembayaran
         +string bukti_transfer
-        +string midtrans_order_id
-        +string midtrans_status
+        +string paymentku_reference
+        +string paymentku_status
         +int verifikasi_oleh_admin_id
         +datetime created_at
         +datetime updated_at
@@ -291,8 +291,8 @@ classDiagram
 | - jumlah_bayar: decimal           |
 | - metode_pembayaran: string       |
 | - bukti_transfer: string (nullable|
-| - midtrans_order_id: string       |
-| - midtrans_status: string         |
+| - paymentku_reference: string     |
+| - paymentku_status: string       |
 | - verifikasi_oleh_admin_id: int   |
 +-----------------------------------+
 | + booking(): BelongsTo            |

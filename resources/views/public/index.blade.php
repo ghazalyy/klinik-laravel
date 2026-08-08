@@ -63,7 +63,7 @@
             <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition text-center">
                 <div class="text-5xl mb-4">💻</div>
                 <h3 class="text-xl font-semibold text-gray-800 mb-2">Konsultasi Online</h3>
-                <p class="text-gray-500 text-sm">Chat langsung dengan dokter dari kenyamanan rumah Anda. Bayar mudah via Midtrans.</p>
+                <p class="text-gray-500 text-sm">Chat langsung dengan dokter dari kenyamanan rumah Anda. Bayar mudah via Paymenku.</p>
             </div>
             <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition text-center">
                 <div class="text-5xl mb-4">🏥</div>

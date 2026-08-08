@@ -62,8 +62,8 @@ class PaymentkuWebhookController extends Controller
             $booking->update(['status_pembayaran' => 'lunas']);
             if ($booking->pembayaran) {
                 $booking->pembayaran->update([
-                    'midtrans_order_id' => $orderId,
-                    'midtrans_status'   => $status,
+                    'paymentku_reference' => $orderId,
+                    'paymentku_status'   => $status,
                     'metode_pembayaran' => 'Paymenku',
                 ]);
             }
